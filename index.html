@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHẠM MINH LONG // SHATTERDOME COMMAND DOSSIER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,600&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void: #050a10;
+      --bg-hull: rgba(11, 21, 34, 0.88);
+      --bg-sub: rgba(7, 14, 24, 0.84);
+      --cyan: #00e5ff;
+      --cyan-glow: rgba(0, 229, 255, 0.35);
+      --orange: #ff6a00;
+      --orange-glow: rgba(255, 106, 0, 0.35);
+      --text-main: #eaf4ff;
+      --text-dim: #9bb4ce;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-void);
+      background-image: 
+        linear-gradient(rgba(5, 10, 16, 0.78), rgba(5, 10, 16, 0.90)),
+        url('bg-cherno.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Chakra Petch', sans-serif;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* HUD TOP BAR */
+    .hud-header {
+      text-align: center;
+      padding: 28px 20px 22px;
+      border-bottom: 2px solid var(--orange);
+      background: linear-gradient(180deg, rgba(5, 10, 16, 0.95) 0%, rgba(11, 21, 34, 0.85) 100%);
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
+    }
+
+    .hud-sub {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 3px;
+      color: #ffbe44;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .hud-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    /* MAIN CONTAINER - TOÀN MÀN HÌNH */
+    .container {
+      width: 96%;
+      max-width: 1600px;
+      margin: 30px auto 0;
+      padding: 0 15px;
+      display: grid;
+      gap: 28px;
+    }
+
+    /* HERO / PROFILE OVERVIEW */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hud-panel {
+      background: var(--bg-hull);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: 6px;
+      padding: 22px;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.08), inset 0 0 18px rgba(0, 229, 255, 0.05);
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+
+    .hud-panel::before,
+    .hud-panel::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--cyan);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .hud-panel::before {
+      top: -1px;
+      left: -1px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .hud-panel::after {
+      bottom: -1px;
+      right: -1px;
+      border-width: 0 2px 2px 0;
+    }
+
+    /* AVATAR BOX */
+    .avatar-frame {
+      width: 100%;
+      height: 360px;
+      border: 1px solid var(--cyan);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      background: #07121e;
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .avatar-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(5, 10, 16, 0.85);
+      border-left: 3px solid var(--orange);
+      padding: 6px 10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* INTRO & NAV */
+    .intro-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .intro-greeting {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2.5px;
+      color: #ffbe44;
+      margin-bottom: 6px;
+    }
+
+    .pilot-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      color: var(--cyan);
+      text-shadow: 0 0 18px var(--cyan-glow);
+      margin-bottom: 10px;
+    }
+
+    .intro-desc {
+      color: var(--text-dim);
+      font-size: 1.05rem;
+      max-width: 640px;
+      margin: 0 auto 24px;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0, 229, 255, 0.2);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn span.roman {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--orange);
+      margin-right: 8px;
+      font-weight: 800;
+    }
+
+    /* SECTION HEADERS */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .section-badge {
+      background: var(--cyan);
+      color: #050a10;
+      font-weight: 900;
+      padding: 2px 10px;
+      border-radius: 3px;
+      font-size: 0.95rem;
+    }
+
+    .status-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: #00ff9d;
+      border: 1px solid rgba(0, 255, 157, 0.4);
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: rgba(0, 255, 157, 0.08);
+    }
+
+    /* BIO INFO GRID */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .bio-item {
+      background: var(--bg-sub);
+      border-left: 3px solid var(--cyan);
+      padding: 14px 16px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .bio-label {
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .bio-value {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* MEDIA & HOBBY CARDS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .media-card {
+      background: var(--bg-sub);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-radius: 5px;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--orange);
+      box-shadow: 0 6px 20px rgba(255, 106, 0, 0.2);
+    }
+
+    .media-thumb {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      background: #040911;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+    }
+
+    .media-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .media-card:hover .media-thumb img {
+      transform: scale(1.05);
+    }
+
+    .media-body {
+      padding: 16px;
+    }
+
+    .media-category {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .media-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    .media-desc {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+    }
+
+    /* YOUTUBE VIDEO SECTION (FIXED 153 ERROR) */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #040911;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* FOOTER */
+    .hud-footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 229, 255, 0.2);
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        width: 98%;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HUD BANNER -->
+  <header class="hud-header">
+    <div class="hud-sub">PPDC // JAEGER PILOT DOSSIER • MARK-I CHERNO ALPHA</div>
+    <h1 class="hud-title">GIỚI THIỆU VỀ BẢN THÂN</h1>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO SECTION -->
+    <section class="hero-grid">
+      <div class="hud-panel">
+        <div class="avatar-frame">
+          <img src="avatar.jpg" alt="Phạm Minh Long">
+          <div class="avatar-tag">
+            <span>PILOT: P.M. LONG</span>
+            <span>SYNC: 98.4%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud-panel intro-box">
+        <div class="intro-greeting">XIN CHÀO, MÌNH LÀ</div>
+        <h2 class="pilot-name">Phạm Minh Long</h2>
+        <p class="intro-desc">
+          Trang web này chứa các thông tin thú vị về mình, từ công nghệ, game, gym cho tới âm nhạc. Khám phá ngay!
+        </p>
+
+        <nav class="nav-grid">
+          <a href="#info" class="nav-btn">
+            <span><span class="roman">I</span>Thông tin cơ bản</span>
+            <span>↓</span>
+          </a>
+          <a href="#hobby" class="nav-btn">
+            <span><span class="roman">II</span>Sở thích & Gym</span>
+            <span>↓</span>
+          </a>
+          <a href="#media" class="nav-btn">
+            <span><span class="roman">III</span>Phim, Anime & Âm nhạc</span>
+            <span>↓</span>
+          </a>
+          <a href="#university" class="nav-btn">
+            <span><span class="roman">IV</span>Đại học & Video</span>
+            <span>↓</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- SECTION I: THÔNG TIN CƠ BẢN -->
+    <section id="info" class="hud-panel">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="section-badge">I</span>
+          <span>Thông tin cơ bản</span>
+        </div>
+        <span class="status-tag">VERIFIED</span>
+      </div>
+
+      <div class="bio-grid">
+        <div class="bio-item">
+          <div class="bio-label">Họ và tên</div>
+          <div class="bio-value">Phạm Minh Long</div>
+        </div>
+        <div class="bio-item">
+          <div class="bio-label">Ngày sinh</div>
+          <div class="bio-value">06 / 02 / 2009</div>
+        </div>
+        <div class="bio-item">
+          <div class="bio-label">Trường học</div>
+          <div class="bio-value">THPT Hòn Gai</div>
+        </div>
+        <div class="bio-item">
+          <div class="bio-label">Hệ điều hành</div>
+          <div class="bio-value">Android & Windows</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION II: SỞ THÍCH, GAMING & GYM -->
+    <section id="hobby" class="hud-panel">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="section-badge">II</span>
+          <span>Sở thích, Gaming & Thể hình (Gym)</span>
+        </div>
+        <span class="status-tag">COMBAT READY</span>
+      </div>
+
+      <div class="cards-grid">
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="doom.jpg" alt="DOOM Eternal">
+          </div>
+          <div class="media-body">
+            <div class="media-category">FPS / ACTION</div>
+            <h3 class="media-title">DOOM Eternal</h3>
+            <p class="media-desc">Tốc độ cao, nhạc nền bùng nổ và cảm giác càn quét không khoan nhượng cực kỳ đã tay.</p>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="cs2.jpg" alt="Counter-Strike 2">
+          </div>
+          <div class="media-body">
+            <div class="media-category">TACTICAL FPS</div>
+            <h3 class="media-title">Counter-Strike 2</h3>
+            <p class="media-desc">Đấu súng chiến thuật, rèn phản xạ và phối hợp đồng đội căng não từng round đấu.</p>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="gym.jpg" alt="Gym / Fitness">
+          </div>
+          <div class="media-body">
+            <div class="media-category">STRENGTH TRAINING</div>
+            <h3 class="media-title">Tập Gym & Thể hình</h3>
+            <p class="media-desc">Rèn luyện thể lực: <b>Bench press mỗi bên 20kg (15 rep)</b> & <b>Leg press mỗi bên 40kg (20 rep)</b>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION III: PHIM, ANIME & ÂM NHẠC -->
+    <section id="media" class="hud-panel">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="section-badge">III</span>
+          <span>Phim, Anime & Âm nhạc</span>
+        </div>
+        <span class="status-tag">ARCHIVED</span>
+      </div>
+
+      <div class="cards-grid">
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="pacific-rim.jpg" alt="Pacific Rim">
+          </div>
+          <div class="media-body">
+            <div class="media-category">SCI-FI / MECHA MOVIE</div>
+            <h3 class="media-title">Pacific Rim</h3>
+            <p class="media-desc">Những cỗ máy khổng lồ Jaeger đối đầu Kaiju – nguồn cảm hứng thiết kế giao diện này.</p>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="death-note.jpg" alt="Death Note">
+          </div>
+          <div class="media-body">
+            <div class="media-category">ANIME / THRILLER</div>
+            <h3 class="media-title">Death Note</h3>
+            <p class="media-desc">Những màn đấu trí đỉnh cao, căng thẳng đến nghẹt thở giữa Light Yagami và L.</p>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="ngot.webp" alt="Ban nhạc Ngọt">
+          </div>
+          <div class="media-body">
+            <div class="media-category">INDIE BAND</div>
+            <h3 class="media-title">Ngọt</h3>
+            <p class="media-desc">Giai điệu Indie mộc mạc, gần gũi nhưng đầy chiều sâu để thư giãn sau giờ học.</p>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb">
+            <img src="thang-ngot.jpg" alt="Vũ Đinh Trọng Thắng">
+          </div>
+          <div class="media-body">
+            <div class="media-category">ARTIST</div>
+            <h3 class="media-title">Thắng (Ngọt)</h3>
+            <p class="media-desc">Giọng ca và phong cách sáng tác độc đáo, mang đậm chất tự sự của tuổi trẻ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION IV: ĐẠI HỌC MƠ ƯỚC & VIDEO -->
+    <section id="university" class="hud-panel">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="section-badge">IV</span>
+          <span>Đại học mơ ước & Video giới thiệu</span>
+        </div>
+        <span class="status-tag">GOAL TARGET</span>
+      </div>
+
+      <div style="display: grid; gap: 20px;">
+        <div class="bio-grid">
+          <div class="bio-item">
+            <div class="bio-label">Nguyện vọng 1</div>
+            <div class="bio-value">Học viện An ninh nhân dân</div>
+          </div>
+          <div class="bio-item">
+            <div class="bio-label">Nguyện vọng 2</div>
+            <div class="bio-value">Trường Đại học Sư phạm Hà Nội</div>
+          </div>
+          <div class="bio-item">
+            <div class="bio-label">Nguyện vọng 3</div>
+            <div class="bio-value">Trường Đại học Y Hà Nội</div>
+          </div>
+        </div>
+
+        <!-- YOUTUBE VIDEO EMBED CHUẨN (KHÔNG LỖI 153) -->
+        <div style="margin-top: 10px;">
+          <h3 style="font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--cyan); margin-bottom: 12px;">📺 Video mục tiêu</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube-nocookie.com/embed/7ZpSkgaIx4M" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="hud-footer">
+    SHATTERDOME TERMINAL // DESIGNED FOR PHẠM MINH LONG • 2026
+  </footer>
+
+</body>
+</html>
